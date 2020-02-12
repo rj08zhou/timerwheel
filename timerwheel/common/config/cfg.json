@@ -1,0 +1,41 @@
+{
+  "timeWheelId" : 1,
+  "scheduleUrl" :"http://127.0.0.1:8080/timeout/handler" ,
+  "rpc": {
+    "enabled": true,
+    "listen": "0.0.0.0:6087"
+  },
+  "redis": {
+    "dsn": "127.0.0.1:8001,127.0.0.1:8002,127.0.0.1:8003",
+    "type": "sentinel",
+    "masterName": "LOCALHOST_REDIS_C01",
+    "masterPwd": "okdgncveotva0h9o",
+    "maxIdle": 20,
+    "maxActive" : 100,
+    "idleTimeout": 30,
+    "connTimeout": 5000,
+    "readTimeout": 5000,
+    "writeTimeout": 5000
+  },
+  "redis_alone": {
+    "dsn": "127.0.0.1:6379",
+    "type": "alone",
+    "maxIdle": 20,
+    "maxActive" : 100,
+    "idleTimeout": 30,
+    "connTimeout": 5000,
+    "readTimeout": 5000,
+    "writeTimeout": 5000
+  },
+  "zookeeper" :{
+    "zkServers" : "127.0.0.1:2181",
+    "zkRoot" : "/timerWheel",
+    "timeout" : 1000
+  },
+  "log_file": {
+    "log_path": "./logs",
+    "log_file_name": "timerWheel",
+    "max_age" : 7,
+    "rotation_time" : 86400
+  }
+}

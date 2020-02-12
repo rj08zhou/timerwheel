@@ -1,0 +1,24 @@
+syntax = "proto3";
+package rpc ;
+
+message DelayTaskModel {
+    string key = 1 ;
+    int32 delay = 2;
+    int32 circle = 3 ;
+    string monitorRule = 4 ;
+    int64 processTime = 5 ;
+    int64 timestamp = 6;
+    int64 expiredTime = 7;
+}
+
+message AddTaskRequest {
+    repeated DelayTaskModel delayTasks = 1 ;
+}
+
+message AddTaskResponse {
+    int32 code = 1;
+}
+
+service TimerWheelService {
+    rpc Send (AddTaskRequest) returns (AddTaskResponse) {}
+}
