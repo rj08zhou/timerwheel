@@ -1,13 +1,11 @@
-# timerwheel
-A distributed timerwheel system used for monitoring scheduled tasks...
 
-## 分布式调度任务超时监控系统
+## 时间轮方案
 
 ### 时间轮介绍
 
 时间轮方案中将现实中的时间概念引入，定义一个时钟周期(比如时钟的60分钟)和步长(比如时钟指针一秒走一次)，需要计时的任务根据超时的时间分布在不同的时钟刻度上。当时钟指针每走一步时，获取当前时钟刻度上挂在的任务并执行。时间轮的结构一般如下图所示:
 
-![timerWheel](https://img-blog.csdnimg.cn/20200221151549634.jpg)
+![timerWheel](https://github.com/rj08zhou/timerwheel/blob/master/timerWheel.jpg)
 
 从上图看到，对于时间的计算交给类似时钟的组件做，而任务则是通过一个指针或者引用去关联某个刻度上到期的定时任务，这样就能将定时任务的存储和时间进行解耦。
 
@@ -16,7 +14,7 @@ A distributed timerwheel system used for monitoring scheduled tasks...
 时间轮方案中任务数据的存储是关键。可以依托专门的存储服务如HBase,Redis来进行存储。这里为了不过多地引入其它组件增加系统系统复杂性，采用了redis来存储
 数据。如下图所示:
 
-<a href="url"><img src="https://img-blog.csdnimg.cn/2020022115153236.jpg" align="center" height="350" width="550" ></a>
+<a href="url"><img src="https://github.com/rj08zhou/timerwheel/blob/master/storage.jpg" align="center" height="350" width="550" ></a>
 
 定时任务存储在redis的hash结构中，存储数据的命令可为 hmset key <dataKey, dateValue>。这里的key指的是时间轮槽位(刻度)的值，即每个时间轮的槽位在
 redis中都有一个对应的hash结构存储。datakey和dataValue可以是落位在这个槽中的定时任务的存储数据。
@@ -28,7 +26,7 @@ redis中都有一个对应的hash结构存储。datakey和dataValue可以是落�
 这里采用了时间轮的集群来实现可靠性。每个时间轮维护自己一个元数据(metadata),里面可以记录当前指针刻度，当前任务key值等用于恢复时间轮意外down掉的信息。
 同时利用zookeeper分布式协调服务实现一个服务注册发现的过程，通过zookeeper的watcher机制来控制时间轮本身的自动扩容缩容以及意外恢复。如下图所示:
 
-![discovery](https://img-blog.csdnimg.cn/20200221151519541.jpg)
+![discovery](https://github.com/rj08zhou/timerwheel/blob/master/discovery.jpg)
 
 具体流程如下：
 
@@ -40,7 +38,7 @@ redis中都有一个对应的hash结构存储。datakey和dataValue可以是落�
 
 ### 总体架构图
 
-![whole_structure](https://img-blog.csdnimg.cn/2020022115161437.jpg)
+![whole_structure](https://github.com/rj08zhou/timerwheel/blob/master/whole.jpg)
 
 
 ### 部署和使用
