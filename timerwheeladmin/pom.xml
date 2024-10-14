@@ -20,7 +20,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <lombok.version>1.16.22</lombok.version>
         <grpc.version>1.53.0</grpc.version>
-        <jetty.version>9.4.53.v20231009</jetty.version>
+        <jetty.version>12.0.12</jetty.version>
     </properties>
 
     <dependencies>
